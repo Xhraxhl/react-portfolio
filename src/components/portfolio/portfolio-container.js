@@ -7,13 +7,13 @@ export default class PortfolioContainer extends Component {
         super();
         this.state = {
             pageTitle: "Welcome to my portfolio",
+            isLoading: false,
             data: [
                 {title: "Quick", category: "Speedy", slug: "quick"},
                 {title: "Magic", category: "Spells", slug: "magic"},
-                {title: "Apples", category: "Food", slug: apples},
+                {title: "Apples", category: "Food", slug: "apples"},
                 {title: "H", category: "Its H", slug: "h"},
             ],
-            isLoading: false,
         };
         this.handlePageTitleUpdate = this.handlePageTitleUpdate.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
