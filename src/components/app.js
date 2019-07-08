@@ -7,6 +7,7 @@ import Home from './pages/home';
 import About from './pages/about';
 import Contact from './pages/contact';
 import Blog from './pages/blog';
+import PortfolioDetail from './portfolio/portfolio-detail';
 
 export default class App extends Component {
   render() {
