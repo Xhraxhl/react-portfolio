@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 import PortfolioItem from "./portfolio-item";
 
@@ -9,14 +10,14 @@ export default class PortfolioContainer extends Component {
             pageTitle: "Welcome to my portfolio",
             isLoading: false,
             data: [
-                {title: "Quick", category: "Speedy", slug: "quick"},
-                {title: "Magic", category: "Spells", slug: "magic"},
-                {title: "Apples", category: "Food", slug: "apples"},
-                {title: "H", category: "Its H", slug: "h"},
+                {id: "Quick", title: "Quick", category: "Speedy", slug: "quick"},
+                {id: "Magic" ,title: "Magic", category: "Spells", slug: "magic"},
+                {id: "Apples" ,title: "Apples", category: "Food", slug: "apples"},
+                {id: "H" ,title: "H", category: "Its H", slug: "h"},
             ],
         };
-        this.handlePageTitleUpdate = this.handlePageTitleUpdate.bind(this);
         this.handleFilter = this.handleFilter.bind(this);
+        this.getPortfolioItems = this.getPortfolioItems.bind(this);
     }
 
     handleFilter(filter) {
@@ -27,36 +28,46 @@ export default class PortfolioContainer extends Component {
         })
     }
 
+    getPortfolioItems() {
+        axios
+            .get("https://aaaaaaaa.devcamp.space/portfolio/portfolio_items")
+            .then(response => {
+                this.setState({
+                    data: response.data.portfolio_items
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+  
     portfolioItems() {
         return this.state.data.map(item => {
-            return <PortfolioItem title={item.title} url={"google.com"} />;
+            return <PortfolioItem key={item.id} item={item}/>;
         })
     }
-    handlePageTitleUpdate() {
-        this.setState({
-            pageTitle: "Don't say it"
-        })
+
+    componentDidMount() {
+        this.getPortfolioItems();
     }
+
     render() {
         if(this.state.isLoading) {
             return(
                 <div>Loading...</div>
             )
         }
+        this.getPortfolioItems();
         return (
             <div>
-                <h2>{this.state.pageTitle}</h2>
-                
-                <button onClick={this.handlePageTitleUpdate}>Change Title</button>
-
-                {this.portfolioItems()}
-
-                <hr/>
-
                 <button onClick={() => this.handleFilter('Speedy')}>Speedy</button>
                 <button onClick={() => this.handleFilter('Spells')}>Spells</button>
                 <button onClick={() => this.handleFilter('Food')}>Food</button>
                 <button onClick={() => this.handleFilter('Its H')}>Its H</button>
+
+                <div className="portfolio-items-wrapper">
+                    {this.portfolioItems()}
+                </div>
             </div>
         )
     }
