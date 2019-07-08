@@ -29,14 +29,16 @@ export default class PortfolioContainer extends Component {
     }
 
     getPortfolioItems() {
+        console.log('catgirls');
+        
         axios
             .get("https://aaaaaaaa.devcamp.space/portfolio/portfolio_items")
             .then(response => {
                 this.setState({
                     data: response.data.portfolio_items
-                })
+                });
             })
-            .catch(error => {
+                .catch(error => {
                 console.log(error);
             });
     }
@@ -48,6 +50,7 @@ export default class PortfolioContainer extends Component {
     }
 
     componentDidMount() {
+        console.log("call")
         this.getPortfolioItems();
     }
 
@@ -57,17 +60,12 @@ export default class PortfolioContainer extends Component {
                 <div>Loading...</div>
             )
         }
-        this.getPortfolioItems();
         return (
-            <div>
-                <button onClick={() => this.handleFilter('Speedy')}>Speedy</button>
-                <button onClick={() => this.handleFilter('Spells')}>Spells</button>
-                <button onClick={() => this.handleFilter('Food')}>Food</button>
-                <button onClick={() => this.handleFilter('Its H')}>Its H</button>
-
-                <div className="portfolio-items-wrapper">
-                    {this.portfolioItems()}
-                </div>
+            <div className="portfolio-items-wrapper">
+                <button className="btn" onClick={() => this.handleFilter('Spells')}>Spells</button>
+                <button className="btn" onClick={() => this.handleFilter('Food')}>Food</button>
+                <button className="btn" onClick={() => this.handleFilter('Its H')}>Its H</button>
+                {this.portfolioItems()}
             </div>
         )
     }
