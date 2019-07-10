@@ -5,10 +5,10 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: "",
             errorText: "",
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -17,7 +17,7 @@ export default class Login extends Component {
         axios.post("https://api.devcamp.space/sessions",
         {
             client: {
-                username: this.state.username,
+                username: this.state.email,
                 password: this.state.password,
             }
         },
@@ -26,17 +26,14 @@ export default class Login extends Component {
             if(response.data.status === "created") {
                 console.log("accessed");
             } else {
+                console.log("not accessed");
                 this.setState({
                     errorText: "Wrong credentials"
                 });
-                this.props.handleUnsuccessfulAuth();
             }
         })
         .catch(error => {
-            this.setState({
-                errorText: "An error occured"
-            });
-            this.props.handleUnsuccessfulAuth();
+            console.log(error);
         });
         event.preventDefault();
     }
@@ -56,11 +53,12 @@ export default class Login extends Component {
 
                 <form onSubmit={this.handleSubmit}>
                     <input 
-                        type="username" 
-                        name="username" 
-                        placeholder="Username" 
-                        value={this.state.username} 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email" 
+                        value={this.state.email} 
                         onChange={this.handleChange} />
+                        
                     <input type="password" 
                         name="password" 
                         placeholder="Password" 
