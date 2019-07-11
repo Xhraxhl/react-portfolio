@@ -13,31 +13,41 @@ export default class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Submit button responses for login
     handleSubmit(event) {
+        // Push info to api
         axios.post("https://api.devcamp.space/sessions",
         {
             client: {
-                username: this.state.email,
+                email: this.state.email,
                 password: this.state.password,
             }
         },
+        // IF true log in else return not accessed
         {withCredentials: true},
         ).then(response => {
             if(response.data.status === "created") {
-                console.log("accessed");
+                console.log("accessed", response);
+                this.props.handleSuccessfulAuth();
             } else {
-                console.log("not accessed");
+                console.log("rejected");
                 this.setState({
-                    errorText: "Wrong credentials"
+                    errorText: "Wrong credentials",
+                    email: "",
+                    password: ""
                 });
+                this.props.handleUnSuccessfulAuth();
             }
         })
         .catch(error => {
             console.log(error);
+            this.props.handleUnSuccessfulAuth();
         });
+        // Prevents page from reloading
         event.preventDefault();
     }
 
+    // For when values in the inputs are changed
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value,
@@ -45,6 +55,7 @@ export default class Login extends Component {
         });
     }
 
+    // Render the component
     render() {
         return(
             <div>
@@ -52,13 +63,14 @@ export default class Login extends Component {
                 <h3>{this.state.errorText}</h3>
 
                 <form onSubmit={this.handleSubmit}>
+                    {/* Email input */}
                     <input 
                         type="email" 
                         name="email" 
                         placeholder="Email" 
                         value={this.state.email} 
                         onChange={this.handleChange} />
-                        
+                    {/* Password input */}
                     <input type="password" 
                         name="password" 
                         placeholder="Password" 

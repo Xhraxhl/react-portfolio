@@ -1,0 +1,11 @@
+.portfolio-items-list-wrapper {
+    .portfolio-item-thumb {
+        padding: 21px;
+        .portfolio-thumb-image img {
+            width: 100%;
+        }
+        .title{
+            color: $offwhite;
+        }
+    }
+}

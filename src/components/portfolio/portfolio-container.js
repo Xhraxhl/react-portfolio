@@ -29,8 +29,6 @@ export default class PortfolioContainer extends Component {
     }
 
     getPortfolioItems() {
-        console.log('catgirls');
-        
         axios
             .get("https://aaaaaaaa.devcamp.space/portfolio/portfolio_items")
             .then(response => {
@@ -50,7 +48,6 @@ export default class PortfolioContainer extends Component {
     }
 
     componentDidMount() {
-        console.log("call")
         this.getPortfolioItems();
     }
 
