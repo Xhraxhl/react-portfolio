@@ -72,7 +72,7 @@ export default class App extends Component {
   // Dynamic pages that show up depending if you are logged in or not
   authorizedPages() {
     return [
-      <Route path='/portfoliomanager' component={PortfolioManager} />,
+      <Route key="portfoliomanager" path='/portfoliomanager' component={PortfolioManager} />,
       <Route path='/blogmanager' component={BlogManager} />
     ];
   }

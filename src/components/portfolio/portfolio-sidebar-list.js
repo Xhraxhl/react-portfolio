@@ -1,9 +1,9 @@
 import React from 'react';
 
 const PortfolioSidebarList = (props) => {
-    const portfolioList = props.data.map(portfolioItem => {
+    const portfolioList = props.data.map((portfolioItem, idx) => {
         return (
-            <div className="portfolio-item-thumb">
+            <div key={idx} className="portfolio-item-thumb">
                 <div className="portfolio-thumb-image">
                     <img src={portfolioItem.thumb_image_url}/>
                 </div>

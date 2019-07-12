@@ -10,10 +10,9 @@ export default class PortfolioContainer extends Component {
             pageTitle: "Welcome to my portfolio",
             isLoading: false,
             data: [
-                {id: "Quick", title: "Quick", category: "Speedy", slug: "quick"},
-                {id: "Magic" ,title: "Magic", category: "Spells", slug: "magic"},
-                {id: "Apples" ,title: "Apples", category: "Food", slug: "apples"},
-                {id: "H" ,title: "H", category: "Its H", slug: "h"},
+                {id: "Fun", title: "Fun", category: "Fun", slug: "fun"},
+                {id: "Commercial" ,title: "Commercial", category: "Commercial", slug: "commercial"},
+                {id: "Other" ,title: "Other", category: "Other", slug: "other"},
             ],
         };
         this.handleFilter = this.handleFilter.bind(this);
@@ -59,9 +58,9 @@ export default class PortfolioContainer extends Component {
         }
         return (
             <div className="portfolio-items-wrapper">
-                <button className="btn" onClick={() => this.handleFilter('Spells')}>Spells</button>
-                <button className="btn" onClick={() => this.handleFilter('Food')}>Food</button>
-                <button className="btn" onClick={() => this.handleFilter('Its H')}>Its H</button>
+                <button className="btn" onClick={() => this.handleFilter('Fun')}>Fun</button>
+                <button className="btn" onClick={() => this.handleFilter('Commercial')}>Commercial</button>
+                <button className="btn" onClick={() => this.handleFilter('Other')}>Other</button>
                 {this.portfolioItems()}
             </div>
         )
