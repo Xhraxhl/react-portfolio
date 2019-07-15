@@ -24,6 +24,10 @@ export default class PortfolioForm extends Component {
         this.componentConfig = this.componentConfig.bind(this);
         this.djsconfig = this.djsConfig.bind(this);
         this.handleThumbDrop = this.handleThumbDrop.bind(this);
+
+        this.thumbRef = React.createRef();
+        this.bannerRef = React.createRef();
+        this.logoRef = React.createRef();
     }
 
     handleThumbDrop() {
@@ -74,7 +78,10 @@ export default class PortfolioForm extends Component {
         axios.post("https://aaaaaaaa.devcamp.space/portfolio/portfolio_items", this.buildForm(), { withCredentials: true})
         .then(response => {
             this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
-            console.log("response", response);
+
+            [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
+                ref.current.dropzone.removeAllFiles();
+            });
         })
         .catch(error => {
             console.log("portfolio form error", error);
@@ -87,29 +94,33 @@ export default class PortfolioForm extends Component {
             <div>
                 <h1>Portfolio Form</h1>
 
-                <form onSubmit={this.handleSubmit}>
-                    <div>
+                <form onSubmit={this.handleSubmit} className="portfolio-form-wrapper">
+                    <div className="two-columns">
                         <input type="text" name="name" placeholder="Item name" value={this.state.name} onChange={this.handleChange} />
                         <input type="text" name="url" placeholder="Item url" value={this.state.url} onChange={this.handleChange} />
+                        <input type="text" name="position" placeholder="Item position" value={this.state.position} onChange={this.handleChange} />
+                        <select name="category" value={this.state.category} onChange={this.handleChange}>
+                            <option value="Fun">Fun</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
-                    <div>
-                    <input type="text" name="position" placeholder="Item position" value={this.state.position} onChange={this.handleChange} />
-                    <select name="category" value={this.state.category} onChange={this.handleChange}>
-                        <option value="Fun">Fun</option>
-                        <option value="Commercial">Commercial</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    </div>
-                    <div>
+                    <div className="one-column">
                         <textarea type="text" name="description" placeholder="Item Description" value={this.state.description} onChange={this.handleChange} />
                     </div>
-                    <div className="image-uploaders">
-                        <DropzoneComponent config={this.componentConfig()} djsconfig={this.djsConfig()} eventHandlers={this.handleThumbDrop()}>
-
+                    <div className="image-uploaders three-columns">
+                        <DropzoneComponent ref={this.thumbRef} config={this.componentConfig()} djsconfig={this.djsConfig()} eventHandlers={this.handleThumbDrop()}>
+                            <div className="dz-message">Thumbnail</div>
+                        </DropzoneComponent>
+                        <DropzoneComponent ref={this.bannerRef} config={this.componentConfig()} djsconfig={this.djsConfig()} eventHandlers={this.handleThumbDrop()}>
+                            <div className="dz-message">Banner</div>
+                        </DropzoneComponent>
+                        <DropzoneComponent ref={this.logoRef} config={this.componentConfig()} djsconfig={this.djsConfig()} eventHandlers={this.handleThumbDrop()}>
+                            <div className="dz-message">Logo</div>
                         </DropzoneComponent>
                     </div>
                     <div>
-                        <button type="submit">Save</button>
+                        <button className="btn" type="submit">Save</button>
                     </div>
                 </form>
             </div>
