@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 import NavContainer from './nav/nav-container';
 import Home from './pages/home';
@@ -12,6 +15,8 @@ import PortfolioManager from './pages/portfolio-manager';
 import BlogManager from './pages/blog-manager';
 import NoMatch from "./pages/no-match";
 import axios from 'axios';
+
+library.add(faTrash, faSignOutAlt);
 
 export default class App extends Component {
   constructor(props) {
@@ -73,7 +78,7 @@ export default class App extends Component {
   authorizedPages() {
     return [
       <Route key="portfoliomanager" path='/portfoliomanager' component={PortfolioManager} />,
-      <Route path='/blogmanager' component={BlogManager} />
+      <Route key="blogmanager" path='/blogmanager' component={BlogManager} />
     ];
   }
 
